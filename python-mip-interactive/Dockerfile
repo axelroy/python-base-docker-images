@@ -11,7 +11,10 @@ LABEL eu.humanbrainproject.category=Python
 # RUN conda update psycopg2
 
 # COPY scripts/database_connector/database_connector.py /
-# COPY scripts/docker-entrypoint.sh /
+COPY scripts/main.py /
+COPY scripts/docker-entrypoint.sh /
 
-# ENTRYPOINT ["/docker-entrypoint.sh"]
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["train"]
+# CMD ["test"]
