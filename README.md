@@ -8,6 +8,7 @@ This is a collection of Docker images for Python.
 
 * python-base : Python 3 (includes Conda)
 * python-mip : python-base + psycopg2 + custom library to access MIP databases
+* python-mip-interactive : python-mip + statefull container, which can be interacted after running (still under development, no features yet)
 
 ## Usage
 
