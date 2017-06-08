@@ -10,7 +10,23 @@ This is a collection of Docker images for Python.
 * python-mip : python-base + psycopg2 + custom library to access MIP databases
 * python-mip-interactive : python-mip + statefull container, which can be interacted after running (still under development, no features yet)
 
-## Usage
+## Usage for the interactive version (Provisory)
+
+Basic usage for demo.
+
+launch :
+`docker run --init --name python-mip-interactive hbpmip/python-mip-interactive init`
+
+And in another command line :
+
+`docker exec python-mip-interactive bash ./docker-entrypoint.sh train`
+or
+`docker exec python-mip-interactive bash ./docker-entrypoint.sh test`
+
+
+and to stop :
+`docker stop python-mip-interactive`
+`docker rm python-mip-interactive`
 
 ### Build
 
