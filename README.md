@@ -15,18 +15,17 @@ This is a collection of Docker images for Python.
 Basic usage for demo.
 
 launch :
-`docker run --init --name python-mip-interactive hbpmip/python-mip-interactive init`
+`docker run --rm --init --name python-mip-interactive hbpmip/python-mip-interactive init`
 
 And in another command line :
 
-`docker exec python-mip-interactive bash ./docker-entrypoint.sh train`
+`docker exec python-mip-interactive python /main.py train`
 or
-`docker exec python-mip-interactive bash ./docker-entrypoint.sh test`
+`docker exec python-mip-interactive python /main.py test`
 
 
 and to stop :
 `docker stop python-mip-interactive`
-`docker rm python-mip-interactive`
 
 ### Build
 
