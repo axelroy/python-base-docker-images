@@ -8,19 +8,29 @@ This is a collection of Docker images for Python.
 
 * python-base : Python 3 (includes Conda)
 * python-mip : python-base + psycopg2 + custom library to access MIP databases
-* python-mip-interactive : python-mip + statefull container, which can be interacted after running (still under development, no features yet)
+* python-mip-interactive : python-mip + statefull container, which can be interacted after running (still under development)
 
-## Usage for the interactive version (Provisory)
+## Usage for the interactive version
+
+
+Functionnalities :
+
+Allows to start a Docker container, which can be run without doing any job, and stay listening to the next exec commands the user do.
+
+Input & output not documented yet, will be done in the fully fonctionnal version.
+
 
 Basic usage for demo.
 
 launch :
-`docker run --rm --init --name python-mip-interactive hbpmip/python-mip-interactive init`
+`docker run --rm --init --name python-mip-interactive -v  /home/utilisateur/docker-volume/:/docker-volume  hbpmip/python-mip-interactive init`
 
 And in another command line :
 
 `docker exec python-mip-interactive python /main.py train`
+
 or
+
 `docker exec python-mip-interactive python /main.py test`
 
 

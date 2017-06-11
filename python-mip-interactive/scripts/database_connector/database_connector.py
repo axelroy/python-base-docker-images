@@ -50,7 +50,7 @@ Functions read and write databases
 '''
 
 
-def fetch_data():
+def fetch_data(query = None):
     """
     Fetch data from science-db using the SQL query given through the PARAM_query environment variable
     :return: A dict containing the columns names 'columns' (see psycopg2 'cursor.description') as a list of strings
@@ -61,7 +61,10 @@ def fetch_data():
                             password=science_db_password)
     cur = conn.cursor()
     try:
-        cur.execute(os.environ['PARAM_query'])
+        if query == None:
+            query = os.environ['PARAM_query']
+
+        cur.execute(query)
         columns = [d.name for d in cur.description]
         data = cur.fetchall()
     except psycopg2.ProgrammingError:

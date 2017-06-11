@@ -1,6 +1,7 @@
 import sys
 import json
 from collections import Counter
+import database_connector
 
 input_file = '/docker-volume/data.json'
 output_file = '/docker-volume/out.json'
@@ -21,6 +22,12 @@ def train():
         outfile.write(str(numbers_sum))
 
     print(numbers_sum)
+
+
+    print("database tests : ")
+
+    query = data['query']
+    database_connector.fetch_data(query)
 
 def test():
     """Does the modus of the datas given (for the tests)"""

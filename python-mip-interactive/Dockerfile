@@ -6,8 +6,15 @@ LABEL eu.humanbrainproject.category=Python
 
 RUN mkdir /docker-volume
 
+ENV COMPUTE_IN=/data/in \
+    COMPUTE_OUT=/data/out
+
+RUN conda install -y psycopg2
+RUN conda update psycopg2
+
 COPY scripts/main.py /
 COPY scripts/docker-entrypoint.sh /
+COPY scripts/database_connector/database_connector.py /
 
 ENV TINI_VERSION v0.14.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
