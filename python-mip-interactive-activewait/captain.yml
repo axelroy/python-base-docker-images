@@ -1,0 +1,7 @@
+python-mip:
+  build: Dockerfile
+  image: hbpmip/python-mip-interactive-activewait
+  pre:
+    - echo "Preparing python-mip-interactive-activewait"
+  post:
+    - echo "Finished python-mip-interactive-activewait"

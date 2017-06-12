@@ -19,10 +19,11 @@ Allows to start a Docker container, which can be run without doing any job, and 
 
 Input & output not documented yet, will be done in the fully fonctionnal version.
 
-
 Basic usage for demo.
 
 launch :
+
+TODO : Clean when the good option will be determined.
 `docker run --rm --init --name python-mip-interactive -v  /home/utilisateur/docker-volume/:/docker-volume  hbpmip/python-mip-interactive init`
 
 And in another command line :
