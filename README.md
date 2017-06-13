@@ -24,7 +24,18 @@ Basic usage for demo.
 launch :
 
 TODO : Clean when the good option will be determined.
-`docker run --rm --init --name python-mip-interactive -v  /home/utilisateur/docker-volume/:/docker-volume  hbpmip/python-mip-interactive init`
+`docker run --rm --init --name python-mip-interactive -v  /home/utilisateur/docker-volume/:/docker-volume --env IN_JDBC_URL="jdbc:postgresql://"${HOST}":5432/postgres" --env --env --env IN_JDBC_USER="postgres" --env IN_JDBC_PASSWORD="test" --env OUT_JDBC_URL="jdbc:postgresql://"${HOST}":5432/postgres" --env  OUT_JDBC_USER="postgres" --env  OUT_JDBC_PASSWORD="test" --env PARAM_meta="{}" hbpmip/python-mip-interactive-statefull-run train`
+
+
+ENV
+ENV
+ENV
+
+ENV
+ENV
+ENV
+
+
 
 And in another command line :
 

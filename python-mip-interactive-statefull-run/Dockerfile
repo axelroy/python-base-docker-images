@@ -4,16 +4,6 @@ MAINTAINER royaxe@gmail.com
 
 LABEL eu.humanbrainproject.category=Python
 
-ENV IN_JDBC_URL="jdbc:postgresql://"${HOST}":5432/postgres"
-ENV IN_JDBC_USER="postgres"
-ENV IN_JDBC_PASSWORD="test"
-
-ENV OUT_JDBC_URL="jdbc:postgresql://"${HOST}":5432/postgres"
-ENV OUT_JDBC_USER="postgres"
-ENV OUT_JDBC_PASSWORD="test"
-
-ENV PARAM_meta="{}"
-
 RUN mkdir /docker-volume
 
 RUN conda install -y psycopg2
