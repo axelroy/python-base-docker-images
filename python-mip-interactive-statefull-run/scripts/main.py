@@ -27,7 +27,6 @@ def train():
                 # Output results
                 with open(volume_folder + output_file, 'w') as outfile:
                     outfile.write(str(numbers_sum))
-                    print("Finished")
             else:
                 print("Bad input format for ", input_file, "not set as training mode.")
     except:
@@ -43,14 +42,17 @@ def train():
 def test():
     """Does the modus of the datas given (for the tests)"""
 
-    input_file =  'training_result.txt'
+    input_file =  'input_test.json'
     output_file_test = 'predicates.txt'
 
     print("Test")
-    try:
-        with open(docker-volume + input_file) as data_file:
-            data = json.load(data_file)
+    # try:
+    with open(volume_folder + input_file) as data_file:
+        data = json.load(data_file)
 
+    type = data['type']
+
+    if (type == "test"):
         print("read from file")
         numbers = data['values']
         data = Counter(numbers)
@@ -60,8 +62,10 @@ def test():
             outfile.write(str(mode))
 
         print("Mode : ", mode)
-    except:
-        print("ERROR : Unable to open file ", input_file, ". Does it exists?")
+    else:
+        print("Bad input format for ", input_file, "not set as test mode.")
+    # except:
+    #     print("ERROR : Unable to open file ", input_file, ". Does it exists?")
 
 def main(argv):
     """Documentation can be placed here, but not in the __name__ function"""
