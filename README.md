@@ -24,19 +24,28 @@ Basic usage for demo.
 launch :
 
 TODO : Clean when the good option will be determined.
-`docker run --rm --init --name python-mip-interactive -v  /home/utilisateur/docker-volume/:/docker-volume --env IN_JDBC_URL="jdbc:postgresql://"${HOST}":5432/postgres" --env --env --env IN_JDBC_USER="postgres" --env IN_JDBC_PASSWORD="test" --env OUT_JDBC_URL="jdbc:postgresql://"${HOST}":5432/postgres" --env  OUT_JDBC_USER="postgres" --env  OUT_JDBC_PASSWORD="test" --env PARAM_meta="{}" hbpmip/python-mip-interactive-statefull-run train`
 
+For the python-mip-interactive-statefull-run container :
 
-ENV
-ENV
-ENV
+`docker run \
+--rm \
+--init \
+--name python-mip-interactive \
+-v ${HOME}/docker-volume/:/docker-volume \
+--env IN_JDBC_URL="jdbc:postgresql://172.17.0.1:65432/postgres" \
+--env IN_JDBC_USER="postgres" \
+--env IN_JDBC_PASSWORD="test" \
+--env OUT_JDBC_URL="jdbc:postgresql://172.17.0.1:5432/postgres" \
+--env  OUT_JDBC_USER="postgres" \
+--env  OUT_JDBC_PASSWORD="test" \
+--env PARAM_meta="{}" \
+hbpmip/python-mip-interactive-statefull-run \
+train`
 
-ENV
-ENV
-ENV
+HARD-CODED IP docker0 interface, this is evil, to be fixed when integrated with Woken.
 
-
-
+For the python-mip-interactive-activewait Container :
+=============================
 And in another command line :
 
 `docker exec python-mip-interactive python /main.py train`

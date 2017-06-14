@@ -6,6 +6,9 @@ LABEL eu.humanbrainproject.category=Python
 
 RUN mkdir /docker-volume
 
+ENV COMPUTE_IN=/data/in \
+    COMPUTE_OUT=/data/out
+
 RUN conda install -y psycopg2
 RUN conda update psycopg2
 
