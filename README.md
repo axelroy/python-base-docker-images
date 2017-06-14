@@ -54,7 +54,6 @@ or
 
 `docker exec python-mip-interactive python /main.py test`
 
-
 and to stop :
 `docker stop python-mip-interactive`
 
@@ -69,3 +68,14 @@ Run: `./build.sh`
 3. Call `database_connector.save_results(pfa, error, shape)` to store the results.
 
 For more information, have a look at the library documentation.
+
+
+### statefull-run input
+
+example of input file format at the moment. It's not the final version!
+
+{
+"type" : "training",
+"values": [12, 13, 14, 14],
+"query" : "SELECT score_test1 from linreg_sample;"
+}
