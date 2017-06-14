@@ -29,8 +29,7 @@ For the python-mip-interactive-statefull-run container :
 
 `docker run \
 --rm \
---init \
---name python-mip-interactive \
+--name python-mip-interactive-statefull-run \
 -v ${HOME}/docker-volume/:/docker-volume \
 --env IN_JDBC_URL="jdbc:postgresql://172.17.0.1:65432/postgres" \
 --env IN_JDBC_USER="postgres" \
@@ -42,20 +41,36 @@ For the python-mip-interactive-statefull-run container :
 hbpmip/python-mip-interactive-statefull-run \
 train`
 
-HARD-CODED IP docker0 interface, this is evil, to be fixed when integrated with Woken.
+
+HARD-CODE IP docker0's interface is evil, to be fixed when integrated with Woken.
 
 For the python-mip-interactive-activewait Container :
 =============================
+
+`docker run \
+--init  \
+--name python-mip-interactive-activewait \
+-v ${HOME}/docker-volume/:/docker-volume \
+--env IN_JDBC_URL="jdbc:postgresql://172.17.0.1:65432/postgres" \
+--env IN_JDBC_USER="postgres" \
+--env IN_JDBC_PASSWORD="test" \
+--env OUT_JDBC_URL="jdbc:postgresql://172.17.0.1:5432/postgres" \
+--env  OUT_JDBC_USER="postgres" \
+--env  OUT_JDBC_PASSWORD="test" \
+--env PARAM_meta="{}" \
+hbpmip/python-mip-interactive-activewait \
+init`
+
 And in another command line :
 
-`docker exec python-mip-interactive python /main.py train`
-
+`docker exec python-mip-interactive-activewait python /main.py train`
 or
-
-`docker exec python-mip-interactive python /main.py test`
+`docker exec python-mip-interactive-activewait python /main.py test`
 
 and to stop :
-`docker stop python-mip-interactive`
+`docker stop python-mip-interactive-activewait`
+`docker rm python-mip-interactive-activewait`
+
 
 ### Build
 
@@ -74,8 +89,8 @@ For more information, have a look at the library documentation.
 
 example of input file format at the moment. It's not the final version!
 
-{
+`{
 "type" : "training",
 "values": [12, 13, 14, 14],
 "query" : "SELECT score_test1 from linreg_sample;"
-}
+}`

@@ -43,7 +43,7 @@ def test():
     """Does the modus of the datas given (for the tests)"""
 
     input_file =  'input_test.json'
-    output_file_test = 'predicates.txt'
+    output_file = 'predicates.txt'
 
     print("Test")
     # try:
@@ -58,7 +58,7 @@ def test():
         data = Counter(numbers)
         mode = data.most_common(1)
 
-        with open(volume_folder + output_file_test, 'w') as outfile:
+        with open(volume_folder + output_file, 'w') as outfile:
             outfile.write(str(mode))
 
         print("Mode : ", mode)
