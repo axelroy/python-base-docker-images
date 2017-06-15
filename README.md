@@ -10,6 +10,20 @@ This is a collection of Docker images for Python.
 * python-mip : python-base + psycopg2 + custom library to access MIP databases
 * python-mip-interactive : python-mip + statefull container, which can be interacted after running (still under development)
 
+
+### Build
+
+Run: `./build.sh`
+
+### Integrate a new algorithm
+
+1. Add `import database_connector` in your Python script;
+2. Call `database_connector.fetch_data()` to get the input data;
+3. Call `database_connector.save_results(pfa, error, shape)` to store the results.
+
+For more information, have a look at the library documentation.
+
+
 ## Usage for the interactive version
 
 
@@ -72,20 +86,7 @@ and to stop :
 `docker rm python-mip-interactive-activewait`
 
 
-### Build
-
-Run: `./build.sh`
-
-### Integrate a new algorithm
-
-1. Add `import database_connector` in your Python script;
-2. Call `database_connector.fetch_data()` to get the input data;
-3. Call `database_connector.save_results(pfa, error, shape)` to store the results.
-
-For more information, have a look at the library documentation.
-
-
-### statefull-run input
+### interactive inputs
 
 example of input file format at the moment. It's not the final version!
 
