@@ -26,20 +26,20 @@ For more information, have a look at the library documentation.
 
 ## Usage for the interactive version
 
+There's two version of the interactive container at the moment, the statefull run stops between each `docker run`
+command, but the input files shared with the `docker-volume` and the entrypoints make the functionnalities differ.
 
-Functionnalities :
+The activewait version is runned, stays alive and then wait for an `docker exec`command to do training or test function.
+We have both version because we don't know what we will be able to use with our scala/AKKA backend. 
 
-Allows to start a Docker container, which can be run without doing any job, and stay listening to the next exec commands the user do.
-
-Input & output not documented yet, will be done in the fully fonctionnal version.
-
-Basic usage for demo.
-
-launch :
+First will be explored the interaction with Marathon, but it might be possible to create a Scala to docker direct communication. 
 
 TODO : Clean when the good option will be determined.
 
-For the python-mip-interactive-statefull-run container :
+### For the python-mip-interactive-statefull-run container :
+
+This version works by doing two `docker run` commands. The method called is passed by entrypoint,
+but the work to do is 
 
 `docker run \
 --rm \
@@ -58,8 +58,9 @@ train`
 
 HARD-CODE IP docker0's interface is evil, to be fixed when integrated with Woken.
 
-For the python-mip-interactive-activewait Container :
-=============================
+### For the python-mip-interactive-activewait Container :
+
+Allows to start a Docker container, which can be run without doing any job, and stay listening to the next exec commands the user do.
 
 `docker run \
 --init  \
