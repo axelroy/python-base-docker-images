@@ -1,71 +1,102 @@
 import sys
 import json
-from collections import Counter
 import database_connector
+import numpy as np
+from tpot import TPOTRegressor
+from deap import creator
+from sklearn.model_selection import cross_val_score
 
 volume_folder = '/docker-volume/'
+input_training_file = 'input_training.json'
+input_test_file =  'input_test.json'
 
 def train():
     """Does de average of the given data"""
     print("Train")
 
-    input_file =  'input_training.json'
-    output_file = 'training_result.txt'
+    input_training_file =  'input_training.json'
+    output_file = input_test_file
 
     try:
         # Reading from the JSON input file
-        with open(volume_folder + input_file) as data_file:
+        with open(volume_folder + input_training_file) as data_file:
+            print("Opening succeed")
             data = json.load(data_file)
-
-            type = data['type']
-
-            if (type == "training"):
-                numbers = data['values']
-                numbers_sum = sum(numbers) / len(numbers)
-                print(numbers_sum)
-
-                # Output results
-                with open(volume_folder + output_file, 'w') as outfile:
-                    outfile.write(str(numbers_sum))
-            else:
-                print("Bad input format for ", input_file, "not set as training mode.")
+            print(data)
     except:
-        print("ERROR : Unable to open file ", input_file, ". Does it exists?")
+        print("ERROR while training, this might be because $HOME/docker-volume doesn't contain the input file as", input_file)
 
-    print("database tests : ")
+    # Query retrieving and DB query
+    query_features = data['query_features']
+    query_targets = data['query_targets']
 
-    query = data['query']
-    print(query)
-    result = database_connector.fetch_data(query)
-    print(result)
+    results_features = database_connector.fetch_data(query_features)
+    results_target = database_connector.fetch_data(query_targets)
+
+    print(type(results_target["data"]))
+
+    # Converting to np arrays, for TPOT
+    X_train = np.asarray(results_features["data"])
+    y_train = np.ravel(np.asarray(results_target["data"]))
+
+    tpot = TPOTRegressor(generations=1, population_size=50, verbosity=2)
+
+    tpot.fit(X_train, y_train)
+    best_pipeline = tpot._optimized_pipeline
+    pipeline_str = list(best_pipeline)[0]
+
+    print(volume_folder + output_file)
+
+    output = {"query_features" : query_features, "query_targets" : query_targets, "pipeline" : str(best_pipeline)}
+
+    with open(volume_folder + output_file, 'w') as outfile:
+        outfile.write(json.dumps(output, ensure_ascii=False))
+
 
 def test():
     """Does the modus of the datas given (for the tests)"""
-
-    input_file =  'input_test.json'
+    # Output format still to choose
     output_file = 'predicates.txt'
 
-    print("Test")
-    # try:
-    with open(volume_folder + input_file) as data_file:
+    with open(volume_folder + input_test_file) as data_file:
         data = json.load(data_file)
 
-    type = data['type']
+    pipeline = data['pipeline']
 
-    if (type == "test"):
-        print("read from file")
-        numbers = data['values']
-        data = Counter(numbers)
-        mode = data.most_common(1)
+    # This query assumes that the set is already split for test predicates
+    query_features = data['query_features']
+    query_targets = data['query_targets']
 
-        with open(volume_folder + output_file, 'w') as outfile:
-            outfile.write(str(mode))
+    print(query_features)
+    print(query_targets)
+    
+    results_features = database_connector.fetch_data(query_features)
+    results_targets = database_connector.fetch_data(query_features)
 
-        print("Mode : ", mode)
-    else:
-        print("Bad input format for ", input_file, "not set as test mode.")
-    # except:
-    #     print("ERROR : Unable to open file ", input_file, ". Does it exists?")
+    # Converting to np arrays, for TPOT
+    X_test = np.asarray(results_features["data"])
+    y_test = np.ravel(np.asarray(results_targets["data"]))
+
+    print("len // X :", len(X_test), "Y :", len(y_test))
+    print("Features: ",X_test)
+    print("Targets: ", y_test)
+
+    # convert pipeline string to scikit-learn pipeline object
+    tpot = TPOTRegressor(generations=1, population_size=50, verbosity=2)
+    optimized_pipeline = creator.Individual.from_string(pipeline, tpot._pset) # deap object
+    pipeline = tpot._toolbox.compile(expr=optimized_pipeline)
+
+    fitted_pipeline = pipeline.fit(X_test, y_test)
+
+    # print scikit-learn pipeline objectP
+    print("Chosen Pipeline :", fitted_pipeline, "\n")
+
+    scores = fitted_pipeline.predict(X_test)
+
+    print(scores)
+
+    with open(volume_folder + output_file, 'w') as outfile:
+        outfile.write(scores)
 
 def main(argv):
     """Documentation can be placed here, but not in the __name__ function"""
