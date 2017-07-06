@@ -2,7 +2,6 @@
 
 if [ "$1" = "train" ]; then
 	echo "Running statefull docker container in training mode..."
-	ls /docker-volume
 	python main.py train
 fi
 
