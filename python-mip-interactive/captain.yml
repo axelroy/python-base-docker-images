@@ -1,0 +1,7 @@
+python-mip:
+  build: Dockerfile
+  image: hbpmip/python-mip-interactive
+  pre:
+    - echo "Preparing python-mip-interactive"
+  post:
+    - echo "Preparing python-mip-interactive"

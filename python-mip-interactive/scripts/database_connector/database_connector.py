@@ -40,7 +40,10 @@ analytics_db_password = os.environ['OUT_JDBC_PASSWORD']
 
 
 # Parse metadata environment variable
-metadata = json.loads(os.environ['PARAM_meta'])
+try:
+    metadata = json.loads(os.environ['PARAM_meta'])
+except:
+    print("No metadata")
 
 
 '''
@@ -57,6 +60,7 @@ def fetch_data(query = None):
     and a list of tuple 'data' where each list element represents a database row and the tuple elements match the
     database columns.
     """
+    print(science_db_host, " ", science_db_port," ", science_db_name, " ", science_db_user," ", science_db_password)
     conn = psycopg2.connect(host=science_db_host, port=science_db_port, dbname=science_db_name, user=science_db_user,
                             password=science_db_password)
     cur = conn.cursor()
@@ -67,6 +71,7 @@ def fetch_data(query = None):
         cur.execute(query)
         columns = [d.name for d in cur.description]
         data = cur.fetchall()
+        print("fetch")
     except psycopg2.ProgrammingError:
         columns = []
         data = []

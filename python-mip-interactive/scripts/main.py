@@ -7,6 +7,7 @@ from deap import creator
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 
+# TODO: Pass that to env config
 volume_folder = '/docker-volume/'
 input_training_file = 'input_training.json'
 input_test_file =  'input_test.json'
@@ -22,7 +23,6 @@ def train():
         try:
             # Reading from the JSON input file
             with open(volume_folder + input_training_file) as data_file:
-                print("Opening succeed")
                 data = json.load(data_file)
                 print(data)
         except:
@@ -46,8 +46,8 @@ def train():
         # print("len // X_train :", len(X_train), "Y_train:", len(y_train))
         # print("len // X_test :", len(X_test), "Y_test:", len(y_test))
         # print("===TRAIN===")
-        # print("Features: ",X_test)
-        # print("Targets: ", y_test)
+        # print("Features: ",X_train)
+        # print("Targets: ", y_train)
         # print("===TEST===")
         # print("Features: ",X_test)
         # print("Targets: ", y_test)
@@ -98,8 +98,8 @@ def test():
         # print("len // X_train :", len(X_train), "Y_train:", len(y_train))
         # print("len // X_test :", len(X_test), "Y_test:", len(y_test))
         # print("===TRAIN===")
-        # print("Features: ",X_test)
-        # print("Targets: ", y_test)
+        # print("Features: ",X_train)
+        # print("Targets: ", y_train)
         # print("===TEST===")
         # print("Features: ",X_test)
         # print("Targets: ", y_test)
