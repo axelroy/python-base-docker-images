@@ -23,11 +23,7 @@ Run: `./build.sh`
 
 For more information, have a look at the library documentation.
 
-## Usage for the interactive version
-
-This version is out of date.
-
-### For the python-mip-interactive-statefull-run container :
+## Usage for the python-mip-interactive
 
 This version works by doing two `docker run` commands. The method called is passed by entrypoint,
 but the work to do is
@@ -65,7 +61,7 @@ test`
 
 HARD-CODE IP docker0's interface is evil, to be fixed when integrated with Woken.
 
-### interactive inputs
+## interactive inputs
 
 example of input file format at the moment. It's not the final version!
 
