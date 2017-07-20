@@ -25,8 +25,8 @@ For more information, have a look at the library documentation.
 
 ## Usage for the python-mip-interactive
 
-This version works by doing two `docker run` commands. The method called is passed by entrypoint,
-but the work to do is
+This version works by doing two `docker run` commands. The method called is passed by `entrypoint`,
+but the work to do is :
 
 `docker run \
 --rm \
@@ -59,13 +59,33 @@ hbpmip/python-mip-interactive \
 test`
 
 
-HARD-CODE IP docker0's interface is evil, to be fixed when integrated with Woken.
+HARD-CODE IP docker0's interface is evil, to be fixed when integrated into Woken.
 
 ## interactive inputs
 
-example of input file format at the moment. It's not the final version!
+example of input file format at the moment.
+
+### Training inputs :
+
+filename - input_training.json
+
+Content :
 
 `{
-"query_features" : "SELECT score_test1 from linreg_sample;"
-"query_targets" : "SELECT score_test1 from linreg_sample;"
+  "query_features": "SELECT score_test1, stress_before_test1  from linreg_sample;",
+  "query_targets": "SELECT score_math_course1 from linreg_sample;"
+}`
+
+### Test inputs :
+
+This file is automaticaly generated in the Docker Volume passed in arguments when launched in training mode.
+
+filename - input_test.jsons
+
+Content :
+
+`{
+  "query_features": "SELECT score_test1, stress_before_test1  from linreg_sample;",
+  "query_targets": "SELECT score_math_course1 from linreg_sample;"
+  "pipeline": "KNeighborsRegressor(input_matrix, KNeighborsRegressor__n_neighbors=89, KNeighborsRegressor__p=DEFAULT, KNeighborsRegressor__weights=uniform)",
 }`
